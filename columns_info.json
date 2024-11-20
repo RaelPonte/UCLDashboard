@@ -1,0 +1,99 @@
+{
+    attacking.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        assists: integer
+        corner_taken: integer
+        offsides: integer
+        dribbles: integer
+        match_played: integer
+    }
+    disciplinary.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        fouls_committed: integer
+        fouls_suffered: integer
+        red: integer
+        yellow: integer
+        minutes_played: integer
+        match_played: integer
+    }
+    defending.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        balls_recoverd: integer
+        tackles: integer
+        t_won: integer
+        t_lost: integer
+        clearance_attempted: integer
+        match_played: integer
+    }
+    attempts.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        total_attempts: integer
+        on_target: integer
+        off_target: integer
+        blocked: integer
+        match_played: integer
+    }
+    goals.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        goals: integer
+        right_foot: integer
+        left_foot: integer
+        headers: integer
+        others: integer
+        inside_area: integer
+        outside_areas: integer
+        penalties: integer
+        match_played: integer
+    }
+    key_stats.csv: {
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        minutes_played: integer
+        match_played: integer
+        goals: integer
+        assists: integer
+        distance_covered: varchar(5)
+    }
+    distributon.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        pass_accuracy: float
+        pass_attempted: integer
+        pass_completed: integer
+        cross_accuracy: integer
+        cross_attempted: integer
+        cross_complted: integer
+        freekicks_taken: integer
+        match_played: integer
+    }
+    goalkeeping.csv: {
+        serial: integer
+        player_name: varchar(40)
+        club: varchar(30)
+        position: varchar(10)
+        saved: integer
+        conceded: integer
+        saved_penalties: integer
+        cleansheets: integer
+        punches made: integer
+        match_played: integer
+    }
+}

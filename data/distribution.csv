@@ -1,4 +1,4 @@
-serial,player_name,club,position,pass_accuracy,pass_attempted,pass_completed,cross_accuracy,cross_attempted,cross_complted,freekicks_taken,match_played
+serial,player_name,club,position,pass_accuracy,pass_attempted,pass_completed,cross_accuracy,cross_attempted,cross_completed,freekicks_taken,match_played
 01,Erokhin,Zenit,Midfielder,98,27,26,0,2,0,0,6
 02,Eric García,Barcelona,Defender,97.5,203,197,0,0,0,1,4
 03,Ulreich,Bayern,Goalkeeper,97,32,31,0,0,0,1,1

@@ -2,6 +2,7 @@ import duckdb
 import pandas as pd
 import os
 import logging
+from controllers.metadata_controller import MetadataController
 
 
 class DataIngestor:
@@ -17,6 +18,7 @@ class DataIngestor:
         self._make_startup_validations()
 
         self.conn = duckdb.connect(database=self.db_path)
+        self.metadata_controller = MetadataController(self.conn)
 
     def ingest_data(self):
         """
@@ -73,6 +75,13 @@ class DataIngestor:
                     self.conn.execute(
                         f"CREATE TABLE IF NOT EXISTS {self.table_name} AS SELECT * FROM chunk LIMIT 0"
                     )
+
+                    self.metadata_controller.register_metadata(
+                        csv_path=self.csv_file,
+                        row_count=len(chunk),
+                        column_names=list(chunk.columns),
+                    )
+
                     self.conn.execute(
                         f"INSERT INTO {self.table_name} SELECT * FROM chunk"
                     )
