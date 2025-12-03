@@ -1,1 +1,10 @@
 data/test.csv
+__pycache__
+
+venv
+*.duckdb
+
+.claude
+
+reports/*
+.DS_Store

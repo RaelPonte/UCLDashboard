@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingestion Report - {{table_name}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .table-name {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-badge.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .status-badge.partial {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            color: #111827;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .alert.warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .alert .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .alert .content {
+            padding: 0;
+            flex: 1;
+        }
+
+        .alert .title {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .alert li {
+            color: #4b5563;
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .alert li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #9ca3af;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 50px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 50px;
+            transition: width 0.3s ease;
+        }
+
+        .footer {
+            background: #f9fafb;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .timestamp {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .file-path {
+            font-size: 0.875rem;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            background: #f3f4f6;
+            padding: 0.5rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Ingestion Report</h1>
+            <div class="table-name">{{table_name}}</div>
+            <span class="status-badge {{status_class}}">{{status_icon}} {{status_text}}</span>
+        </div>
+
+        <div class="content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon">📁</div>
+                    <div class="label">File</div>
+                    <div class="file-path">{{csv_file}}</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon">⏱️</div>
+                    <div class="label">Duration</div>
+                    <div class="value">{{duration_seconds}}s</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon">⚡</div>
+                    <div class="label">Speed</div>
+                    <div class="value">{{rows_per_second}} rows/s</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon">📦</div>
+                    <div class="label">Chunks</div>
+                    <div class="value">{{successful_chunks}}/{{total_chunks}}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{chunk_progress}}%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon">📝</div>
+                    <div class="label">Rows Inserted</div>
+                    <div class="value">{{inserted_rows}}</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="label">Total Rows</div>
+                    <div class="value">{{total_rows}}</div>
+                </div>
+            </div>
+
+            {{warnings_section}}
+
+            {{errors_section}}
+
+            <div class="timestamp">
+                <div>Started: {{started_at}}</div>
+                <div>Finished: {{finished_at}}</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Generated by UCL Dashboard Pipeline • {{generated_at}}
+        </div>
+    </div>
+</body>
+</html>

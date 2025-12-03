@@ -1,0 +1,8 @@
+from .config import (
+    DATA_DIRECTORY_PATH,
+    DATABASE_PATH,
+    LOGGING_PATH,
+    CHUNK_SIZE,
+    PLAYERS_TABLE_NAME,
+    REPORT_DIRECTORY_PATH
+)
